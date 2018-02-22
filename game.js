@@ -4,7 +4,7 @@ phina.globalize();
 // 何かで使う定数値(バランス調整でいじっていい値)
 const PLAYER_POSITION_Y = 550;  //自機の縦位置
 const PLAYER_DEFAULT_SPEED = 2; //自機の移動スピード
-const BULLET_DEFAULT_SPEED = 5; //自機が発射する弾のスピード
+const BULLET_DEFAULT_SPEED = 50; //自機が発射する弾のスピード
 let score = 0;
 // MainScene クラスを定義
 phina.define('MainScene', {
@@ -33,6 +33,7 @@ phina.define('MainScene', {
             lengthY: 5,
             player: this.player
         }).addChildTo(this);
+
     }
 });
 
@@ -171,8 +172,12 @@ phina.define('EnemyGroup', {
                 if (enemy.hitTestElement(bullet)) {
                     thisGroup.player.bullet.flare('hit');
                     bullet = null;
-                    document.getElementById('score').innerHTML = score += 1;
                     enemy.remove();
+                    document.getElementById('score').innerHTML = score += 1;
+                    if(score === 40){
+                        //console.log("comment");
+                        alert("ゲームクリア!!リロードしてください");
+                    }
                 }
             });
         }
